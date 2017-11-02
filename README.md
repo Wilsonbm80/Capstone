@@ -1,6 +1,7 @@
 # Capstone
 
 Author: Brenton Wilson
+
 Purpose: create music based upon multiple genres/styles. Genericly this means merge two or more midi files 
 in a way that results in an output midi file that is of both inputs' genres.
 
