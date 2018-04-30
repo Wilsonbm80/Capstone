@@ -5,7 +5,12 @@ Author: Brenton Wilson
 Purpose: create music based upon multiple genres/styles. Generically this means merge two or more midi files 
 in a way that results in an output midi file that is of both inputs' genres.
 
-Three complete algorithms for 2-midi-file merges have been created in this repo. 
+Three complete algorithms for 2-midi-file merges have been created in this repo. They can each be called from the shell script: "midimerge.sh".
+
+./midimerge.sh <Merge_Algorithm_Tag> <InputSong#1> <InputSong#2>
+
+Example:
+./midimerge.sh 1 folkSong.mid bluesSong.mid
 
 Random Midi Merge generates a list of note_on timestamps that will be played by one output song (no note_ons matching that timestamp will play from the other). Then, the second song adds all note_ons that do not have a timestamp contained in the random list.
 
