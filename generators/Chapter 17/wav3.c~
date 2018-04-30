@@ -1,0 +1,264 @@
+#include <stdio.h>       /* no math function, so in gcc compile by gcc wav3.c -o wav */
+#include <stdlib.h>      /* then execute by ./wav  */
+                         /* then a wave.wav file is produced that can be played on your media player */
+                         /* this program show how the prime index of the prime index of prime numbers sound */
+
+
+
+
+// Unity > KDE > Gnome
+
+FILE *fp2; FILE *fp1;
+
+void convertlong(unsigned long int number, int byte[4]);
+void play(signed int v);
+void change_to_wav_format(void);
+ void prime(void); 
+unsigned long int place = 0UL;
+int numbers1[3512]; /* number of primes up to 32767 */
+int numbers2[490];   /* primes of numbered primes */
+int numbers3[93];   /* primes of numbered primes of numbered primes */
+   
+
+int main(void)
+ {
+  unsigned int table[40];
+  int i;/* max is 32767, min is -32768 */
+  int j;
+  fp1 =  fopen("tempfile","wb");
+  prime();
+
+for (j = 0; j < 400; ++j)
+ {
+   for (i = 0; i < 93; ++i)
+    play(numbers3[i]);
+   for (i = 92; i < 0; --i)
+    play(numbers3[i]); 
+ } 
+fclose(fp1);
+change_to_wav_format();
+return(1);
+}
+
+
+
+
+
+void prime(void)
+ {
+  int p,d;
+  int isprime;
+  int counter;
+  int i;
+
+counter = 0;  
+for (p = 2; p <= 32767; ++p)
+    {
+     isprime = 1;
+
+     for (d = 2; d < p; ++d)
+        if (p %d == 0)
+           isprime = 0;
+        if (isprime != 0)
+         {
+          numbers1[counter] = p;
+           ++counter;
+          } 
+       }
+  printf("\ncounter = %d",counter); 
+  for (i = 0; i < 3512; ++i)
+   printf("%d ",numbers1[i]); 
+
+
+ counter = 0;  
+for (p = 2; p <= 3512; ++p)
+    {
+     isprime = 1;
+
+     for (d = 2; d < p; ++d)
+        if (p %d == 0)
+           isprime = 0;
+        if (isprime != 0)
+         {
+         numbers2[counter] = numbers1[p];
+           ++counter;
+          } 
+       }
+  printf("\ncounter = %d  ",counter); 
+   for (i = 0; i < 490; ++i)
+     printf("%d ",numbers2[i]); 
+
+
+
+
+counter = 0;  
+for (p = 2; p <= 490; ++p)
+    {
+     isprime = 1;
+
+     for (d = 2; d < p; ++d)
+        if (p %d == 0)
+           isprime = 0;
+        if (isprime != 0)
+         {
+           printf("%d ",p); 
+           numbers3[counter] = numbers2[p];
+           ++counter;
+          } 
+       }
+  printf("\ncounter = %d  ",counter); 
+   for (i = 0; i < 93; ++i)
+     printf("%d ",numbers3[i]); 
+   
+}
+
+
+
+
+
+void play(signed int v)
+  {
+
+   unsigned short int temp1,temp2;
+   signed int number = v;
+
+   temp1 = (short int) number;
+   temp1 = (temp1 >> 8);
+   temp2 = (short int) number;
+   temp2 = (temp2 << 8);
+   temp2 = (temp2 >> 8);
+   fwrite(&temp2,1,1,fp1);
+   ++place;
+   fwrite(&temp1,1,1,fp1);
+   ++place;
+   }
+
+void change_to_wav_format(void)
+  {
+   int temp;
+   int i;
+   int byte[4];
+   fp2 = fopen("wave.wav","wb");
+   temp = 82; /* R */
+   fwrite(&temp,1,1,fp2);
+   temp = 73; /* I */
+   fwrite(&temp,1,1,fp2);
+   temp = 70; /* F */
+   fwrite(&temp,1,1,fp2);
+   temp = 70; /* F */
+   fwrite(&temp,1,1,fp2);
+   convertlong(place + 36,byte);
+   fwrite(&byte[3],1,1,fp2);
+   fwrite(&byte[2],1,1,fp2);
+   fwrite(&byte[1],1,1,fp2);
+   fwrite(&byte[0],1,1,fp2);
+   temp = 87;
+   fwrite(&temp,1,1,fp2); /* W */
+   temp = 65;
+   fwrite(&temp,1,1,fp2); /* A */
+   temp = 86;
+   fwrite(&temp,1,1,fp2); /* V */
+   temp = 69;
+   fwrite(&temp,1,1,fp2); /* E */
+   temp = 102;
+   fwrite(&temp,1,1,fp2); /* f */
+   temp = 109;
+   fwrite(&temp,1,1,fp2); /* m */
+   temp = 116;
+   fwrite(&temp,1,1,fp2); /* t */
+   temp = 32;
+   fwrite(&temp,1,1,fp2);  /*   */
+   temp = 16;
+   fwrite(&temp,1,1,fp2); /* length of bytes to follow written backwards  */
+   temp = 0;
+   fwrite(&temp,1,1,fp2);
+   temp = 0;
+   fwrite(&temp,1,1,fp2);
+   temp = 0;
+   fwrite(&temp,1,1,fp2);
+   temp = 1;
+   fwrite(&temp,1,1,fp2);  /* mono Wav (written backwards */
+   temp = 0;
+   fwrite(&temp,1,1,fp2);
+   temp = 1;
+   fwrite(&temp,1,1,fp2);  /* one channel used (written backwards */
+   temp = 0;
+   fwrite(&temp,1,1,fp2);
+   temp = 0x44; 
+   fwrite(&temp,1,1,fp2); /* sample rate */
+   temp =  0xAC; 
+   fwrite(&temp,1,1,fp2);
+   temp = 0;
+   fwrite(&temp,1,1,fp2);
+   temp = 0;
+   fwrite(&temp,1,1,fp2);
+   temp = 0x88;
+   fwrite(&temp,1,1,fp2); /* bytes/second */
+   temp = 0x58;
+   fwrite(&temp,1,1,fp2);
+   temp = 0x01;
+   fwrite(&temp,1,1,fp2);
+   temp = 0x00;
+   fwrite(&temp,1,1,fp2);
+   temp = 2;
+   fwrite(&temp,1,1,fp2); /* bytes per sample */
+   temp = 0;
+   fwrite(&temp,1,1,fp2);
+   temp = 16;
+   fwrite(&temp,1,1,fp2); /* bits per sample */
+   temp = 0;
+   fwrite(&temp,1,1,fp2);
+   temp = 100;
+   fwrite(&temp,1,1,fp2); /* d */
+   temp = 97;
+   fwrite(&temp,1,1,fp2);  /* a */
+   temp = 116;
+   fwrite(&temp,1,1,fp2); /* t */
+   temp = 97;
+   fwrite(&temp,1,1,fp2);  /* a */
+   convertlong(place,byte);
+   fwrite(&byte[3],1,1,fp2);
+   fwrite(&byte[2],1,1,fp2);
+   fwrite(&byte[1],1,1,fp2);
+   fwrite(&byte[0],1,1,fp2);
+   fp1 = fopen("tempfile","rb");
+   do
+    {
+     fread(&i,1,1,fp1);
+     if (!feof(fp1)) fwrite(&i,1,1,fp2);
+    } while (!feof(fp1));
+  fclose(fp1);
+  fclose(fp2);
+ }
+
+
+
+
+
+
+
+void  convertlong(unsigned long int number, int byte[4])
+ {
+  unsigned long int temp;
+
+
+  temp = number;
+  temp = temp >> 8*3;
+  byte[0] = (unsigned short int)temp;
+
+  temp = number;
+  temp =  temp << 8;
+  temp = temp >> 8*3;
+  byte[1] = (unsigned short int)temp;
+
+  temp = number;
+  temp = temp << 8*2;
+  temp = temp >> 8*3;
+  byte[2] = (unsigned short int)temp;
+
+  temp = number;
+  temp = temp << 8*3;
+  temp = temp >> 8*3;
+  byte[3] = (unsigned short int)temp;
+ }
+

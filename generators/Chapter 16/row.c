@@ -1,0 +1,123 @@
+//row.c
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
+void main(void)
+	{
+	 int i,j,k;
+	 int prime[12];
+	 int inversion[12];
+	 int matrix[12][12];
+	 int matrix1[12][12];
+         char s[80];
+	 int factor_to_add,factor_to_add1;
+         printf("This prints Matrix\n");
+         printf("Take your P-0 row and let first note be numbered 0.\n");
+         printf("Then make chromatic scale from that note\n");
+         printf("and number rest hexidecimally.\n"); 
+	 printf("Enter entire row in hexidecimal without spaces, then <enter.\n");
+         printf("use 0 to a only (ex 3a14650b2897).\n");
+         printf("There are no error checks so be careful (garbage in, garbage out).\n"); 
+         
+         gets(s);
+     
+
+	 for (i = 0; i < 12; ++i)
+		{
+		 if (s[i] == '0')
+			prime[i] = 0;
+		 else if (s[i] == '1')
+                        prime[i] = 1;
+                 else if (s[i] == '1')
+                        prime[i] = 1; 
+                 else if (s[i] == '2')
+                        prime[i] = 2;
+                 else if (s[i] == '3')
+                        prime[i] = 3;
+                 else if (s[i] == '4')
+                        prime[i] = 4;
+                 else if (s[i] == '5')
+                        prime[i] = 5; 
+                 else if (s[i] == '6')
+                        prime[i] = 6;
+                 else if (s[i] == '7')
+                        prime[i] = 7;  
+                 else if (s[i] == '8')
+                        prime[i] = 8;
+                 else if (s[i] == '9')
+                        prime[i] = 9; 
+                 else if (s[i] == 'a')
+                        prime[i] = 10;
+                 else if (s[i] == 'b')
+                        prime[i] = 11;
+                 else exit(0);
+		  }
+
+
+		 factor_to_add = 12 - prime[0];   /* set first note to 0 */
+
+		 for (i = 0; i < 12; ++i)
+			prime[i] = (prime[i] + factor_to_add)%12;
+
+
+		 for (i = 0; i < 12; ++i)
+			inversion[i] = (12 - prime[i])%12;
+
+		 for (i = 0; i < 12; ++i)
+		  matrix[i][0] = prime[i];
+
+		 for (i = 0; i < 12; ++i)
+		  matrix[0][i] = inversion[i];
+
+		for (j = 1; j < 12; ++j)
+		  for (i = 1; i < 12; ++i)
+		matrix[i][j] = (matrix[i][0] + matrix[0][j]) %12;
+
+		factor_to_add1 = 12 - factor_to_add;
+		for (j = 0; j < 12; ++j)
+		  for (i = 0; i < 12; ++i)
+			 matrix1[i][j] = (matrix[i][j]+ factor_to_add1)%12;
+
+		system("clear");
+		printf("\n ");
+		for (i = 0; i < 12;++i)
+		printf("%3d",matrix[i][0]);
+		printf("\n");
+		for (j = 0; j < 12; ++j)
+		 {
+		 printf("%3d",matrix[0][j]);
+		  for (i = 0; i < 12; ++i)
+			{
+			 if (matrix1[i][j] == 0)
+			  printf("C  ");
+			  else if (matrix1[i][j] == 1)
+			  printf("C# ");
+			  else if (matrix1[i][j] == 2)
+			  printf("D  ");
+			  else if (matrix1[i][j] == 3)
+			  printf("D# ");
+			  else if (matrix1[i][j] == 4)
+			  printf("E  ");
+			  else if (matrix1[i][j] == 5)
+			  printf("F  ");
+			  else if (matrix1[i][j] == 6)
+			  printf("F# ");
+			  else if (matrix1[i][j] == 7)
+			  printf("G  ");
+			  else if (matrix1[i][j] == 8)
+			  printf("G# ");
+			  else if (matrix1[i][j] == 9)
+			  printf("A  ");
+			  else if (matrix1[i][j] == 10)
+			  printf("A# ");
+			  else if (matrix1[i][j] == 11)
+			  printf("B  ");
+			}
+		  printf("\n");
+  }
+}
+
+
+
+

@@ -24,7 +24,7 @@ i = 1
 #hardcoded values for testing
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@!
 numSongs = 2
-fileNameList = ["folk.csv","blues.csv"]
+fileNameList = [str(sys.argv[1]),str(sys.argv[2])]
 
 fileList = []
 for x in fileNameList:
